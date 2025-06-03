@@ -1,0 +1,69 @@
+/* style.css */
+body {
+    background-color: #f8f9fa; /* Bootstrap 的淺灰色背景 */
+}
+
+#game-board {
+    display: grid;
+    /* 格子大小和數量會由 JS 設定 */
+    border: 2px solid #adb5bd; /* Bootstrap 的邊框顏色 */
+    background-color: #dee2e6; /* Bootstrap 的淺灰色 */
+}
+
+/* 使遊戲板容器內的遊戲板正確對齊 */
+#game-board-container {
+    line-height: 0; /* 解決 d-inline-block 可能產生的底部額外空間 */
+}
+
+
+.cell {
+    width: 32px;  /* 調整為包含邊框後的期望大小 */
+    height: 32px; /* 調整為包含邊框後的期望大小 */
+    border: 1px solid #ced4da; /* Bootstrap 的淺邊框顏色 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem; /* Bootstrap 預設字體大小 */
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #e9ecef; /* 未揭開的格子顏色 */
+    user-select: none;
+    box-sizing: border-box; /* 確保 padding 和 border 包含在 width/height 內 */
+}
+
+.cell.revealed {
+    background-color: #d1d5db; /* 揭開後的格子顏色 */
+    cursor: default;
+}
+
+.cell.mine {
+    /* background-color: red; (Bootstrap Danger color can be used) */
+    /* color: white; */
+}
+
+.cell.mine.revealed { /* 當地雷被揭開時才顯示紅色 */
+    background-color: #dc3545; /* Bootstrap danger color */
+    color: white;
+}
+
+
+.cell.flagged::after {
+    content: "🚩";
+    font-size: 1.1rem; /* 調整旗幟大小 */
+}
+
+/* 不同數字的顏色 (可以使用 Bootstrap text color classes or custom) */
+.cell.revealed[data-count="1"] { color: #0d6efd; } /* Bootstrap primary */
+.cell.revealed[data-count="2"] { color: #198754; } /* Bootstrap success */
+.cell.revealed[data-count="3"] { color: #dc3545; } /* Bootstrap danger */
+.cell.revealed[data-count="4"] { color: #0dcaf0; } /* Bootstrap info */
+.cell.revealed[data-count="5"] { color: #fd7e14; } /* Bootstrap orange */
+.cell.revealed[data-count="6"] { color: #6f42c1; } /* Bootstrap purple */
+.cell.revealed[data-count="7"] { color: #212529; } /* Bootstrap dark */
+.cell.revealed[data-count="8"] { color: #6c757d; } /* Bootstrap secondary */
+
+/* 標示插錯旗的樣式 */
+.cell.wrong-flag {
+    background-color: #ffc107; /* Bootstrap warning color */
+    color: #343a40; /* Dark text for better contrast on warning */
+}
