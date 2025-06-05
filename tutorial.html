@@ -4,40 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>踩地雷 - 教學模式</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
     <link rel="stylesheet" href="style.css">
+    <style>
+        .tutorial-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+        .tutorial-card .card-title {
+            color: var(--bs-primary);
+        }
+         .tutorial-card .card-text {
+            min-height: 60px; /* 確保卡片內文字區域有一定高度 */
+        }
+        .tutorial-card .btn {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-3 mb-3 text-center">
-        <div class="d-flex align-items-center mb-3 position-relative">
+    <div class="container mt-3 mb-5 text-center">
+        <div class="d-flex align-items-center mb-4 position-relative"> 
             <a href="index.html" class="btn btn-sm btn-outline-secondary">返回首頁</a>
             <h2 id="game-mode-title" class="mb-0 text-center position-absolute top-50 start-50 translate-middle">教學模式</h2>
         </div>
 
         <div id="alert-placeholder" class="mb-3"></div>
 
-        <div id="tutorial-content" class="mb-3 p-3 bg-light rounded shadow-sm">
-            <p class="lead">教學模式即將推出！敬請期待。</p>
-            <p>在這裡，您將學習如何玩踩地雷，包括：</p>
-            <ul>
-                <li>基本規則和目標</li>
-                <li>如何辨識數字的意義</li>
-                <li>插旗的技巧</li>
-                <li>常見的策略</li>
-            </ul>
-            <p class="mt-4"><em>(此頁面目前為靜態內容，遊戲邏輯尚未整合。)</em></p>
+        <div id="tutorial-content" class="mb-3">
+            <p class="lead mb-4">歡迎來到踩地雷教學模式！請選擇您想學習的關卡。</p>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <!-- 教學關卡 1: 基礎規則 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm tutorial-card">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">關卡 1：基礎規則與目標</h5>
+                            <p class="card-text">了解踩地雷的基本玩法、遊戲目標以及如何開始您的第一局遊戲。</p>
+                            <a href="tutorial_level_1.html" class="btn btn-primary mt-auto">開始教學</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 教學關卡 2: 數字的意義 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm tutorial-card">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">關卡 2：標記地雷 - 插旗技巧</h5>
+                            <p class="card-text">掌握如何使用旗幟來標記您認為是地雷的格子，以避免誤觸。</p>
+                            <a href="tutorial_level_2.html" class="btn btn-primary mt-auto">開始教學</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 教學關卡 3: 插旗技巧 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm tutorial-card">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">關卡 3：數字格的秘密</h5>
+                            <p class="card-text">學習如何解讀格子上的數字，它們是找出地雷位置的關鍵線索。</p>
+                            <a href="tutorial_level_3.html" class="btn btn-primary mt-auto">開始教學</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 教學關卡 4: 基礎技巧 (可選) -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm tutorial-card">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">關卡 4：基礎掃雷技巧</h5>
+                            <p class="card-text">學習簡單有效的技巧，幫助您更有效率地清除雷區。</p>
+                            <a href="tutorial_level_4.html" class="btn btn-primary mt-auto">開始教學</a> 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 您可以根據需要添加更多教學關卡 -->
+
+            </div>
         </div>
-         <!-- 遊戲控制項和遊戲板可以先註解掉或移除，因為教學模式尚未完成 -->
-        <!--
-        <div id="game-controls" class="controls d-flex justify-content-around align-items-center gap-3 mb-3 p-3 bg-light rounded shadow-sm">
-             ...
-        </div>
-        <div id="game-board-container" class="d-inline-block shadow-lg">
-             <div id="game-board"></div>
-        </div>
-        -->
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- <script src="script.js"></script>  教學模式可能需要獨立的或簡化的 JS -->
+    <!-- 教學模式的主頁面可能不需要複雜的 script.js，除非您有動態載入關卡列表等需求 -->
+    <!-- <script src="tutorial-script.js"></script> -->
 </body>
 </html>

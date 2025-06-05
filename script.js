@@ -57,8 +57,8 @@ function initializePage() {
             rankedDifficultyRadios.forEach(radio => {
                 radio.addEventListener('change', () => {
                     // 選擇難度後可以選擇立即重設遊戲板預覽，或等待"開始遊戲"按鈕
-                    // updateGameSettings(); // 如果希望即時更新設定
-                    // setupGame(); // 如果希望立即重設遊戲
+                    updateGameSettings(); // 如果希望即時更新設定
+                    setupGame(); // 如果希望立即重設遊戲
                 });
             });
         }
@@ -148,6 +148,9 @@ function updateGameSettings() {
         CURRENT_COLS = newCols;
         CURRENT_MINES = newMines;
         if (!settingsValid && validationMessage) {
+
+            console.log('Free mode validation - settingsValid:', settingsValid, 'validationMessage:', validationMessage); // 新增日誌
+
             showAlert(validationMessage, "warning", 7000);
         }
     } else { // 預設情況或未知模式
@@ -535,24 +538,106 @@ async function submitScoreToBackend(name, time, difficulty) {
 
 
 // --- 提示訊息函數 ---
+// function showAlert(message, type = 'info', duration = 0) {
+//     if (!alertPlaceholder) return;
+//     alertPlaceholder.innerHTML = '';
+//     const wrapper = document.createElement('div');
+//     wrapper.innerHTML = [
+//         `<div class="alert alert-${type} alert-dismissible fade show" role="alert">`,
+//         `   <div>${message}</div>`,
+//         '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+//         '</div>'
+//     ].join('');
+//     alertPlaceholder.append(wrapper);
+//     if (duration > 0) {
+//         setTimeout(() => {
+//             const alertElement = wrapper.firstChild;
+//             if (alertElement && alertElement.classList && alertElement.classList.contains('alert')) {
+//                 const alertInstance = bootstrap.Alert.getInstance(alertElement);
+//                 if (alertInstance) { alertInstance.close(); }
+//                 else { alertElement.classList.remove('show'); setTimeout(() => { if (alertElement.parentNode) { alertElement.parentNode.removeChild(alertElement); } }, 150); }
+//             }
+//         }, duration);
+//     }
+// }
+
 function showAlert(message, type = 'info', duration = 0) {
-    if (!alertPlaceholder) return;
-    alertPlaceholder.innerHTML = '';
+    console.log('[DEBUG] showAlert CALLED. Message:', message, 'Type:', type, 'Duration:', duration);
+    if (!alertPlaceholder) {
+        console.error('[DEBUG] showAlert: alertPlaceholder is NULL or UNDEFINED in the current HTML page. Cannot display alert.');
+        return;
+    }
+    console.log('[DEBUG] showAlert: alertPlaceholder found:', alertPlaceholder);
+
+    // 為了最大相容性和簡潔性，先嘗試用簡單的 innerHTML 插入，確保元素本身可見
+    // alertPlaceholder.innerHTML = `<div style="padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: .25rem; color: #0c5460; background-color: #d1ecf1; border-color: #bee5eb;">${message}</div>`;
+    // console.log('[DEBUG] showAlert: innerHTML of alertPlaceholder set with basic div.');
+    // return; // 如果只想測試這個基本 div，在這裡返回
+
+    // 使用 Bootstrap Alert
+    alertPlaceholder.innerHTML = ''; // 清除舊的 alerts
     const wrapper = document.createElement('div');
+    const alertId = `alert-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`; // 確保 ID 唯一
     wrapper.innerHTML = [
-        `<div class="alert alert-${type} alert-dismissible fade show" role="alert">`,
+        `<div class="alert alert-${type} alert-dismissible fade show" role="alert" id="${alertId}">`,
         `   <div>${message}</div>`,
         '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
         '</div>'
     ].join('');
-    alertPlaceholder.append(wrapper);
+    alertPlaceholder.appendChild(wrapper); // 使用 appendChild 而不是 append，後者在某些舊環境可能不被完全支援
+    console.log(`[DEBUG] showAlert: Bootstrap alert HTML appended to alertPlaceholder. Alert ID: ${alertId}`);
+
+    // 手動觸發 Bootstrap Alert 的 'show' 事件，以確保它被正確初始化 (如果 Bootstrap JS 已載入)
+    const alertElementForBootstrap = document.getElementById(alertId);
+    if (alertElementForBootstrap && typeof bootstrap !== 'undefined' && bootstrap.Alert) {
+        try {
+            // 嘗試獲取實例，如果不存在則創建一個
+            let alertInstance = bootstrap.Alert.getInstance(alertElementForBootstrap);
+            if (!alertInstance) {
+                console.log('[DEBUG] showAlert: No Bootstrap alert instance found, creating new one.');
+                alertInstance = new bootstrap.Alert(alertElementForBootstrap);
+            } else {
+                console.log('[DEBUG] showAlert: Existing Bootstrap alert instance found.');
+            }
+        } catch (e) {
+            console.error('[DEBUG] showAlert: Error initializing Bootstrap alert instance:', e);
+        }
+    } else {
+        console.warn('[DEBUG] showAlert: Bootstrap JS or bootstrap.Alert not available, or alertElementForBootstrap not found. Dismiss button might not work via JS.');
+    }
+
+
     if (duration > 0) {
         setTimeout(() => {
-            const alertElement = wrapper.firstChild;
-            if (alertElement && alertElement.classList && alertElement.classList.contains('alert')) {
-                const alertInstance = bootstrap.Alert.getInstance(alertElement);
-                if (alertInstance) { alertInstance.close(); }
-                else { alertElement.classList.remove('show'); setTimeout(() => { if (alertElement.parentNode) { alertElement.parentNode.removeChild(alertElement); } }, 150); }
+            const alertToDismiss = document.getElementById(alertId);
+            if (alertToDismiss) {
+                console.log(`[DEBUG] showAlert: Attempting to dismiss alert ${alertId} after ${duration}ms`);
+                if (typeof bootstrap !== 'undefined' && bootstrap.Alert) {
+                    const alertInstance = bootstrap.Alert.getInstance(alertToDismiss);
+                    if (alertInstance) {
+                        alertInstance.close();
+                        console.log(`[DEBUG] showAlert: Bootstrap alert ${alertId} closed via instance.`);
+                    } else {
+                        // Fallback if getInstance is null (e.g., element removed or BS not fully init)
+                        alertToDismiss.classList.remove('show');
+                        // 為了安全，也手動移除 DOM 元素
+                        setTimeout(() => {
+                            if (alertToDismiss.parentNode) {
+                                alertToDismiss.parentNode.removeChild(alertToDismiss);
+                                console.log(`[DEBUG] showAlert: Alert ${alertId} removed from DOM (fallback).`);
+                            }
+                        }, 150); // Bootstrap fade duration
+                    }
+                } else {
+                     // 如果 Bootstrap JS 不可用，手動移除
+                    alertToDismiss.style.display = 'none'; // 或者直接移除
+                    if (alertToDismiss.parentNode) {
+                        alertToDismiss.parentNode.removeChild(alertToDismiss);
+                        console.log(`[DEBUG] showAlert: Alert ${alertId} hidden/removed (Bootstrap JS not available).`);
+                    }
+                }
+            } else {
+                console.warn(`[DEBUG] showAlert: Alert ${alertId} not found for dismissal.`);
             }
         }, duration);
     }

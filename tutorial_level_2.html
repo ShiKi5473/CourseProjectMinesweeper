@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>踩地雷教學 - 插旗技巧 (關卡 2)</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css"> <!-- 您可以選擇性地為教學頁面添加通用樣式 -->
+    <link rel="stylesheet" href="tutorial_example_styles.css"> <!-- 教學範例的樣式 -->
+    <style>
+        /* 保留通用的頁面佈局和內容框樣式 */
+        body {
+            background-color: #f8f9fa;
+        }
+        .tutorial-container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .content-box {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .content-box h3 {
+            color: var(--bs-primary);
+            margin-bottom: 1rem;
+        }
+        .content-box h4 {
+            color: var(--bs-dark);
+            margin-top: 2rem;
+        }
+        .content-box p, .content-box li {
+            line-height: 1.8;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        .content-box ul {
+            text-align: left;
+            padding-left: 1.5rem;
+        }
+        .content-box li {
+            margin-bottom: 0.5rem;
+        }
+        .header-bar {
+            position: relative;
+        }
+        .text-emphasis {
+            font-weight: bold;
+            color: var(--bs-danger);
+        }
+        .key-icon { /* 用於顯示滑鼠右鍵等圖示的樣式 */
+            display: inline-block;
+            padding: 0.2em 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 0.25em;
+            background-color: #f0f0f0;
+            font-family: monospace;
+            margin: 0 0.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container tutorial-container mt-3 mb-5">
+        <div class="d-flex align-items-center mb-4 header-bar">
+            <a href="tutorial.html" class="btn btn-sm btn-outline-secondary">返回教學列表</a>
+            <h1 class="mb-0 text-center position-absolute top-50 start-50 translate-middle">關卡 2</h1>
+        </div>
+
+        <div class="content-box">
+            <h3 class="text-center">標記地雷：插旗技巧</h3>
+            <hr class="mb-4">
+
+            <p>歡迎來到教學關卡 2！在了解了基礎規則和數字的意義後，現在我們來學習一個非常重要的輔助技巧——<strong>插旗 (Flagging)</strong>。</p>
+
+            <h4 class="mt-4">為什麼要插旗？</h4>
+            <p>當您通過數字推斷，<span class="text-emphasis">確定某個未揭開的方塊下方必定是地雷時</span>，您可以對它進行插旗標記。插旗的主要目的有：</p>
+            <ul>
+                <li><strong>避免誤觸</strong>：已插旗的方塊通常無法被左鍵點擊揭開（不同遊戲版本實現可能略有差異），這可以有效防止您不小心點到已確認的地雷。</li>
+                <li><strong>輔助計算</strong>：標記出地雷後，可以幫助您更清晰地判斷周圍數字格還需要多少個未被標記的地雷，從而推斷出其他安全格。</li>
+                <li><strong>追蹤進度</strong>：在複雜的局面中，插旗可以幫您記住哪些位置已經被判斷為地雷。</li>
+            </ul>
+
+            <h4 class="mt-4">如何插旗？</h4>
+            <p>在大多數踩地雷遊戲中，插旗的操作是：</p>
+            <p class="text-center">將滑鼠游標移動到您認為是地雷的未揭開方塊上，然後點擊 <span class="key-icon">滑鼠右鍵</span>。</p>
+            <p>成功插旗後，該方塊上通常會顯示一個旗幟圖示「🚩」。</p>
+            <div class="text-center my-3">
+                <p><small>範例：對一個可疑方塊進行插旗。</small></p>
+                <div class="example-grid" style="grid-template-columns: repeat(3, 35px); grid-template-rows: repeat(1, 35px);">
+                    <div class="example-cell">?</div>
+                    <div class="example-cell highlight">?</div> 
+                    <div class="example-cell">?</div>
+                </div>
+                <p class="mt-2"><small>右鍵點擊後：</small></p>
+                <div class="example-grid" style="grid-template-columns: repeat(3, 35px); grid-template-rows: repeat(1, 35px);">
+                    <div class="example-cell">?</div>
+                    <div class="example-cell mine flagged-correctly">🚩</div> 
+                    <div class="example-cell">?</div>
+                </div>
+            </div>
+
+            <h4 class="mt-4">如何取消插旗？</h4>
+            <p>如果您後來發現某個已插旗的方塊判斷錯誤，或者想重新考慮，您可以取消插旗。</p>
+            <p class="text-center">通常，再次在已插旗的方塊上點擊 <span class="key-icon">滑鼠右鍵</span> 即可取消旗幟。</p>
+            <p>取消後，旗幟圖示會消失，方塊恢復到未揭開的普通狀態。</p>
+
+            <h4 class="mt-4">插旗的時機與注意事項</h4>
+            <ul>
+                <li><strong>只在非常確定的情況下插旗</strong>：只有當您通過邏輯推斷100%確定某個格子是地雷時，才對其插旗。隨意插旗可能會誤導您的後續判斷。</li>
+                <li><strong>旗子數量限制</strong>：在某些遊戲版本中，可用的旗子數量可能等於總地雷數。如果旗子用完了，您就無法再插旗，除非先取消一些已有的旗幟。</li>
+                <li><strong>錯誤插旗</strong>：如果您錯誤地將一個安全格插上了旗幟，它不會導致遊戲失敗。但如果您依賴這個錯誤的旗幟進行推斷，可能會導致您點開真正的地雷。遊戲結束時，錯誤的旗幟通常會被標示出來。</li>
+                <li><strong>「Chord」操作的輔助</strong>：正確插旗後，可以配合我們在關卡4將會學到的「Chord」（或稱雙擊、同時點擊）操作，快速揭開數字周圍剩餘的安全格。</li>
+            </ul>
+
+            <h4 class="mt-4">練習插旗</h4>
+            <p>在實際遊戲中，養成良好插旗習慣非常重要。嘗試在您確定地雷位置後，立即使用右鍵進行標記。</p>
+            <div class="text-center my-3">
+                 <p><small>範例：數字「1」周圍只有一個未開方塊，確定它是地雷並插旗。</small></p>
+                <div class="example-grid">
+                    <div class="example-cell revealed"> </div> <div class="example-cell revealed"> </div> <div class="example-cell revealed"> </div>
+                    <div class="example-cell revealed"> </div> <div class="example-cell revealed number-1">1</div> <div class="example-cell inferred-mine">🚩</div>
+                    <div class="example-cell revealed"> </div> <div class="example-cell revealed"> </div> <div class="example-cell revealed"> </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-5">
+                <a href="tutorial_level_1.html" class="btn btn-outline-secondary">返回前一關：基礎規則</a>
+                <a href="tutorial.html" class="btn btn-secondary">返回教學列表</a>
+                <a href="tutorial_level_3.html" class="btn btn-primary">前往下一關：數字格的秘密</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

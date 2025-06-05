@@ -1,0 +1,72 @@
+/* tutorial_example_styles.css */
+/* 用於教學模式中遊戲板範例的樣式 */
+
+.example-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 35px); /* 稍微縮小範例格子 */
+    grid-template-rows: repeat(3, 35px);
+    gap: 1px; /* 縮小間隙 */
+    justify-content: center;
+    margin: 1rem auto;
+    border: 1px solid #ccc;
+    width: fit-content;
+    background-color: #ccc; /* 讓間隙有顏色 */
+}
+
+.example-cell {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #bbb; /* 調整邊框顏色 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    background-color: #e9ecef; /* 未揭開格子的預設背景 */
+    font-size: 0.9rem; /* 調整範例格子內數字大小 */
+    color: #212529; /* 預設文字顏色 */
+}
+
+.example-cell.revealed {
+    background-color: #d1d5db; /* 已揭開格子的背景 */
+}
+
+.example-cell.mine { /* 用於表示地雷格 (通常用旗幟表示) */
+    background-color: #e9ecef; /* 未揭開時的背景 */
+    /* 如果是已標記的旗幟，內容為 🚩 */
+    /* 如果是遊戲結束時顯示的地雷，內容為 💣 且背景可能為紅色 */
+    /* 此處僅為一般地雷格的標示，具體顯示由 HTML 內容決定 */
+    font-size: 1.1rem; /* 調整旗幟/地雷圖示大小以便顯示 */
+}
+
+.example-cell.mine.flagged-correctly { /* 正確插旗的地雷 (範例用) */
+    background-color: #ddeeff; /* 淡藍色背景表示已插旗 */
+    color: #000; /* 旗幟顏色 */
+}
+
+
+.example-cell.safe { /* 用於表示推斷出的安全格 */
+    background-color: #e6ffed; /* 淡綠色背景 */
+    color: #198754; /* 內容文字顏色 (如果有的話) */
+}
+
+.example-cell.highlight { /* 用於高亮特定格子 */
+    border: 2px solid #fd7e14 !important; /* 橙色高亮邊框，使用 !important 確保覆蓋 */
+    box-shadow: 0 0 5px rgba(253, 126, 20, 0.7);
+}
+
+/* 數字顏色 */
+.example-cell.number-1 { color: #0d6efd; } /* Bootstrap primary */
+.example-cell.number-2 { color: #198754; } /* Bootstrap success */
+.example-cell.number-3 { color: #dc3545; } /* Bootstrap danger */
+.example-cell.number-4 { color: #087990; } /* 深藍綠色 */
+.example-cell.number-5 { color: #7b2cbf; } /* 深紫色 */
+.example-cell.number-6 { color: #0dcaf0; } /* Bootstrap info (青色) */
+.example-cell.number-7 { color: #212529; } /* Bootstrap dark */
+.example-cell.number-8 { color: #6c757d; } /* Bootstrap secondary (灰色) */
+
+/* 如果地雷格要用特定背景色標示 (例如推斷出的地雷) */
+.example-cell.inferred-mine {
+    background-color: #ffebee; /* 淡紅色背景表示推斷出的地雷 */
+    color: #dc3545; /* 地雷內容顏色 */
+}
+

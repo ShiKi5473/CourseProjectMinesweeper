@@ -34,6 +34,16 @@ body {
 .cell.revealed {
     background-color: #d1d5db; /* 揭開後的格子顏色 */
     cursor: default;
+    border: 1px solid #b8c2cc; /* 揭開後邊框，顏色可以稍微不同 (明確設定邊框) */
+}
+
+.cell.revealed:hover {
+    /* 揭開的格子通常沒有特殊的 hover 效果，因為它們不再互動 */
+    /* 如果需要，可以在這裡添加樣式，例如輕微改變背景色 */
+    /* background-color: #c0c4c9; */
+}
+.cell:hover:not(.revealed) {
+    background-color: #dee2e6; /* 滑鼠懸停在未揭開格子上的效果 */
 }
 
 .cell.mine {

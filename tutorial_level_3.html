@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>踩地雷教學 - 數字格的秘密與推斷技巧 (關卡 3)</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css"> <!-- 您可以選擇性地為教學頁面添加通用樣式 -->
+    <link rel="stylesheet" href="tutorial_example_styles.css">
+    <style>
+        /* 保留通用的頁面佈局和內容框樣式 */
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .tutorial-container {
+            max-width: 800px;
+            /* 限制內容寬度，使其更易讀 */
+            margin: auto;
+        }
+
+        .content-box {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .content-box h3 {
+            color: var(--bs-primary);
+            margin-bottom: 1rem;
+        }
+
+        .content-box h4 {
+            color: var(--bs-dark);
+            /* 深色標題以示區分 */
+            margin-top: 2rem;
+            /* 增加標題間距 */
+        }
+        .content-box h5 { /* 為新增的小節標題設定樣式 */
+            color: var(--bs-info);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .content-box p,
+        .content-box li {
+            line-height: 1.8;
+            text-align: left;
+            /* 規則說明文字靠左對齊 */
+            font-size: 0.95rem;
+            /* 略微調整字體大小 */
+        }
+
+        .content-box ul {
+            text-align: left;
+            padding-left: 1.5rem;
+            /* 列表縮排 */
+        }
+
+        .content-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        .header-bar {
+            position: relative;
+        }
+
+        .text-emphasis {
+            font-weight: bold;
+            color: var(--bs-danger);
+            /* 強調文字顏色 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container tutorial-container mt-3 mb-5">
+        <div class="d-flex align-items-center mb-4 header-bar">
+            <a href="tutorial.html" class="btn btn-sm btn-outline-secondary">返回教學列表</a>
+            <h1 class="mb-0 text-center position-absolute top-50 start-50 translate-middle">關卡 3</h1>
+        </div>
+
+        <div class="content-box">
+            <h3 class="text-center">數字格的秘密與推斷技巧</h3>
+            <hr class="mb-4">
+
+            <p>歡迎來到教學關卡 3！我們已經知道數字代表周圍地雷的數量，現在我們將更深入地學習如何利用這些數字進行邏輯推斷，找出地雷並安全地揭開其他格子。</p>
+
+            <h4 class="mt-4">核心推斷技巧：模式識別與減法原則</h4>
+            <p>理解數字的意義是踩地雷的核心。通過觀察多個已揭開數字格提供的資訊，您可以逐步推斷出哪些格子是安全的，哪些格子必定是地雷。以下是一些常見且非常有效的推斷模式：</p>
+
+            <h5>基本情況：利用單一數字</h5>
+            <ul>
+                <li><strong>情況一：數字與未揭開格子數相同</strong>
+                    <p>如果一個已揭開的數字格（例如「1」）周圍只有一個未揭開的格子，那麼那個未揭開的格子 <span class="text-emphasis">必定是地雷</span>。您可以安全地標記它。</p>
+                    <div class="text-center my-3">
+                        <p><small>範例：下方的「1」周圍只有一個「?」格。</small></p>
+                        <div class="example-grid">
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed number-1">1</div>
+                            <div class="example-cell highlight">?</div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                        </div>
+                        <p><small>推斷結果：標記「?」處為地雷。</small></p>
+                        <div class="example-grid">
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed number-1">1</div>
+                            <div class="example-cell inferred-mine">🚩</div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                            <div class="example-cell revealed"> </div>
+                        </div>
+                    </div>
+                </li>
+                <li><strong>情況二：已標記地雷數與數字相同</strong>
+                    <p>如果您已經在一個數字格（例如「2」）周圍標記了與其數字相同數量的地雷，那麼它周圍其他所有未揭開且未標記的格子就 <span
+                            class="text-emphasis">必定是安全的</span>。您可以安全地點開它們。</p>
+                    <div class="text-center my-3">
+                        <p><small>範例：下方的「2」周圍已標記兩個地雷 (🚩)。</small></p>
+                        <div class="example-grid">
+                            <div class="example-cell mine flagged-correctly">🚩</div>
+                            <div class="example-cell highlight">?</div>
+                            <div class="example-cell">?</div>
+                            <div class="example-cell mine flagged-correctly">🚩</div>
+                            <div class="example-cell revealed number-2">2</div>
+                            <div class="example-cell">?</div>
+                            <div class="example-cell">?</div>
+                            <div class="example-cell">?</div>
+                            <div class="example-cell">?</div>
+                        </div>
+                        <p><small>推斷結果：其餘未標記的鄰近格子是安全的，揭開它們後（假設只有這兩個地雷影響它們）：</small></p>
+                        <div class="example-grid">
+                            <div class="example-cell mine flagged-correctly">🚩</div>
+                            <div class="example-cell safe revealed number-2">2</div>
+                            <div class="example-cell safe revealed"> </div>
+                            <div class="example-cell mine flagged-correctly">🚩</div>
+                            <div class="example-cell revealed number-2">2</div>
+                            <div class="example-cell safe revealed"> </div>
+                            <div class="example-cell safe revealed number-1">1</div>
+                            <div class="example-cell safe revealed number-1">1</div>
+                            <div class="example-cell safe revealed"> </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <h5 class="mt-4">進階推斷：利用相鄰數字 (減法原則)</h5>
+            <p>當多個數字格相鄰時，它們提供的資訊可以互相印證或補充，這時「減法原則」就非常有用。這是指利用一個數字格已滿足的地雷數去推斷另一個相鄰數字格周圍的情況。</p>
+            <p><strong>範例：經典的 1-2 模式</strong></p>
+            <p>觀察下圖，數字「1」和數字「2」相鄰。它們共同的鄰居是格子 A 和 B。數字「2」還有一個額外的鄰居 C。在這個範例中，我們假設格子 D 已經被揭開並且是安全的。我們的推斷將集中在格子 A、B 和 C。</p>
+            <div class="text-center my-3">
+                <div class="example-grid"
+                    style="grid-template-columns: repeat(3, 35px); grid-template-rows: repeat(2, 35px);">
+                    <div class="example-cell highlight">A</div>
+                    <div class="example-cell highlight">B</div>
+                    <div class="example-cell highlight">C</div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell revealed number-2">2</div>
+                    <div class="example-cell safe revealed"> </div>
+                </div>
+            </div>
+            <ul>
+                <li>左下方的數字「1」告訴我們：在它上方的兩個鄰居格子 A 和 B 中，總共有 <strong>1</strong> 個地雷。</li>
+                <li>下方的數字「2」告訴我們：在它上方的三個鄰居格子 A、B 和 C 中，總共有 <strong>2</strong> 個地雷。</li>
+            </ul>
+            <p>現在進行推斷：</p>
+            <ol>
+                <li>我們知道格子 A 和 B 中合起來有 1 個地雷（這是由數字「1」確定的）。</li>
+                <li>數字「2」總共需要 2 個地雷。既然它與數字「1」共享的 A 和 B 區域已經提供了 1 個地雷，那麼數字「2」的第 2 個地雷 <span
+                        class="text-emphasis">必定在它獨有的鄰居格子 C 中</span>。</li>
+                <li>因此，我們可以安全地將格子 C 標記為地雷 (🚩)。</li>
+            </ol>
+            <p>推斷結果：</p>
+            <div class="text-center my-2">
+                <div class="example-grid"
+                    style="grid-template-columns: repeat(3, 35px); grid-template-rows: repeat(2, 35px);">
+                    <div class="example-cell">A</div>
+                    <div class="example-cell">B</div>
+                    <div class="example-cell inferred-mine">🚩</div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell revealed number-2">2</div>
+                    <div class="example-cell safe revealed"> </div>
+                </div>
+                <p><small>格子 C 被確定為地雷。格子 A 和 B 中仍然只有一個地雷（目前無法確定是哪一個）。</small></p>
+            </div>
+            <p>這就是「減法原則」的一個經典應用：數字「2」總共需要 2 個雷，減去數字「1」已經確認會在 A 或 B 中提供的 1 個雷，剩下的那 1 個雷就必定在 C 格子裡。這種技巧在解決許多常見的佈局時非常有效。
+            </p>
+
+            <h5 class="mt-4">常見的牆邊推斷模式</h5>
+            <p>在遊戲中，您會經常遇到一些特定的數字排列，特別是沿著遊戲邊界（牆邊）或角落。熟悉這些模式可以幫助您快速識別地雷和安全格。</p>
+
+            <p><strong>"1-2-1" 模式範例 (牆邊):</strong></p>
+            <div class="text-center my-3">
+                <p><small>假設以下是一面牆的邊緣（上方是牆壁或其他已揭開區域）：</small></p>
+                <div class="example-grid"
+                    style="grid-template-columns: repeat(5, 35px); grid-template-rows: repeat(2, 35px);">
+                    <div class="example-cell highlight">A</div>
+                    <div class="example-cell highlight">B</div>
+                    <div class="example-cell highlight">C</div>
+                    <div class="example-cell highlight">D</div>
+                    <div class="example-cell revealed"> </div> 
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell revealed number-2">2</div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell revealed"> </div> 
+                    <div class="example-cell revealed"> </div>
+                </div>
+            </div>
+            <p>在這個沿牆的 "1-2-1" 模式中：</p>
+            <ul>
+                <li>最左邊的「1」告訴我們 A 或 B 中有一個地雷。</li>
+                <li>中間的「2」告訴我們 A、B、C 中有兩個地雷。</li>
+                <li>最右邊的「1」告訴我們 B、C、D 中有一個地雷。</li>
+            </ul>
+            <p>經典的推斷是：地雷必定在格子 <span class="text-emphasis">A</span> 和 <span class="text-emphasis">C</span>。格子 B 和 D 必定是安全的。</p>
+            <p>推斷過程與之前類似，通過假設 B 是地雷會導致矛盾，因此 B 是安全的，進而推導出 A 和 C 是地雷，D 也是安全的。</p>
+            <div class="text-center my-3">
+                <div class="example-grid"
+                    style="grid-template-columns: repeat(5, 35px); grid-template-rows: repeat(2, 35px);">
+                    <div class="example-cell inferred-mine">🚩</div>
+                    <div class="example-cell safe revealed">S</div>
+                    <div class="example-cell inferred-mine">🚩</div>
+                    <div class="example-cell safe revealed">S</div>
+                    <div class="example-cell revealed"> </div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell revealed number-2">2</div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell revealed"> </div>
+                    <div class="example-cell revealed"> </div>
+                </div>
+                <p><small>推斷結果：「S」代表安全格。</small></p>
+            </div>
+
+
+            <p class="mt-5"><strong>"1-2-2-1" 模式範例 (經典直線型):</strong></p>
+            <p>當您看到一行已揭開的數字呈現 "1-2-2-1" 的排列，並且它們正下方（或正上方）對應著一排連續四個未揭開的格子時。</p>
+            <div class="text-center my-3">
+                <p><small>初始佈局：</small></p>
+                <div class="example-grid"
+                    style="grid-template-columns: repeat(4, 35px); grid-template-rows: repeat(2, 35px);">
+                    <div class="example-cell highlight">A</div>
+                    <div class="example-cell highlight">B</div>
+                    <div class="example-cell highlight">C</div>
+                    <div class="example-cell highlight">D</div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell revealed number-2">2</div>
+                    <div class="example-cell revealed number-2">2</div>
+                    <div class="example-cell revealed number-1">1</div>
+                </div>
+                 <p><small>(假設數字格上方的格子均為安全區或牆壁)</small></p>
+            </div>
+            <p>在這個 "1-2-2-1" 模式中，對於未揭開的格子 A, B, C, D：</p>
+            <ul>
+                <li>最左邊的「1」需要其鄰居（A, B）中有 1 個地雷。</li>
+                <li>左邊的「2」需要其鄰居（A, B, C）中有 2 個地雷。</li>
+                <li>右邊的「2」需要其鄰居（B, C, D）中有 2 個地雷。</li>
+                <li>最右邊的「1」需要其鄰居（C, D）中有 1 個地雷。</li>
+            </ul>
+            <p>經典且唯一符合邏輯的推斷是：地雷必定在格子 <span class="text-emphasis">B</span> 和 <span class="text-emphasis">C</span>。格子 A 和 D 必定是安全的。</p>
+            <p>讓我們驗證一下：</p>
+            <ol>
+                <li>如果地雷在 B 和 C (即 A 和 D 安全)：
+                    <ul>
+                        <li>左邊的「1」：周圍有 A (安全) 和 B (地雷)。→ 滿足 (1 個地雷)。</li>
+                        <li>左邊的「2」：周圍有 A (安全), B (地雷), C (地雷)。→ 滿足 (2 個地雷)。</li>
+                        <li>右邊的「2」：周圍有 B (地雷), C (地雷), D (安全)。→ 滿足 (2 個地雷)。</li>
+                        <li>右邊的「1」：周圍有 C (地雷) 和 D (安全)。→ 滿足 (1 個地雷)。</li>
+                    </ul>
+                </li>
+            </ol>
+            <p>所有數字的條件都完美符合！</p>
+            <div class="text-center my-3">
+                 <p><small>推斷結果：</small></p>
+                 <div class="example-grid" style="grid-template-columns: repeat(4, 35px); grid-template-rows: repeat(2, 35px);">
+                     <div class="example-cell safe revealed">S</div>
+                     <div class="example-cell inferred-mine">🚩</div>
+                     <div class="example-cell inferred-mine">🚩</div>
+                     <div class="example-cell safe revealed">S</div>
+                     <div class="example-cell revealed number-1">1</div>
+                     <div class="example-cell revealed number-2">2</div>
+                     <div class="example-cell revealed number-2">2</div>
+                     <div class="example-cell revealed number-1">1</div>
+                 </div>
+             </div>
+            <p>因此，當您在遊戲中遇到這樣排列的 "1-2-2-1" 和其正對的一排四個未知格時，可以大膽地將中間兩個標記為地雷，並點開兩側的格子。</p>
+
+
+            <p class="mt-4">掌握這些模式和推斷技巧需要練習，但它們是成為踩地雷高手的必經之路！</p>
+
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-5">
+                <a href="tutorial_level_2.html" class="btn btn-outline-secondary">返回前一關：插旗技巧</a>
+                <a href="tutorial.html" class="btn btn-secondary">返回教學列表</a>
+                <a href="tutorial_level_4.html" class="btn btn-primary">前往下一關：基礎掃雷技巧：Chording</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
