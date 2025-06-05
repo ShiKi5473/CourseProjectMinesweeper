@@ -7,8 +7,8 @@
     <title>踩地雷教學 - 基礎掃雷技巧 (Chording) (關卡 4)</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="tutorial_example_styles.css">
+    <link rel="stylesheet" href="../css/style.css"> <!-- 您可以選擇性地為教學頁面添加通用樣式 -->
+    <link rel="stylesheet" href="../css/tutorial_example_styles.css"> <!-- 教學範例的樣式 -->
     <style>
         body {
             background-color: #f8f9fa;
@@ -134,24 +134,36 @@
             <p class="action-description">操作：用滑鼠左鍵點擊數字「1」。</p>
             <p>結果：Chording 操作會嘗試揭開周圍<span class="text-emphasis">所有</span>未插旗且未揭開的格子。在這個範例中，只有格子 A 符合條件，因此它會被安全揭開
                 (假設揭開後是空白格)。</p>
-                <div class="text-center my-3">
-                 <p><small>Chording 操作後：</small></p>
+            <div class="text-center my-3">
+                <p><small>Chording 操作後：</small></p>
                 <div class="example-grid">
-                    <div class="example-cell revealed number-1">1</div> <div class="example-cell mine flagged-correctly">🚩</div> <div class="example-cell revealed number-1">1</div>
-                    <div class="example-cell revealed number-1">1</div> <div class="example-cell revealed number-1">1</div> <div class="example-cell safe revealed"> </div> 
-                    <div class="example-cell revealed"> </div> <div class="example-cell revealed"> </div> <div class="example-cell revealed"> </div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell mine flagged-correctly">🚩</div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell revealed number-1">1</div>
+                    <div class="example-cell safe revealed"> </div>
+                    <div class="example-cell revealed"> </div>
+                    <div class="example-cell revealed"> </div>
+                    <div class="example-cell revealed"> </div>
                 </div>
             </div>
 
             <h5 class="mt-4">範例 2：成功的 Chording (多個安全格，可能引發連鎖反應)</h5>
-             <h5 class="mt-4">範例 2：成功的 Chording (多格展開與連鎖反應)</h5>
+            <h5 class="mt-4">範例 2：成功的 Chording (多格展開與連鎖反應)</h5>
             <p>假設局面如下，數字「2」周圍有兩個已插旗的地雷 (🚩)。其餘鄰近的未揭開格子標記為 A, B, C, D, E, F。</p>
             <div class="text-center my-3">
                 <p><small>初始局面：數字「2」周圍有兩個已插旗的地雷，以及多個未揭開的格子 A, B, C, D, E, F。</small></p>
                 <div class="example-grid">
-                    <div class="example-cell mine flagged-correctly">🚩</div> <div class="example-cell highlight">A</div> <div class="example-cell highlight">B</div>
-                    <div class="example-cell mine flagged-correctly">🚩</div> <div class="example-cell revealed number-2">2</div>  <div class="example-cell highlight">C</div>
-                    <div class="example-cell highlight">D</div><div class="example-cell highlight">E</div><div class="example-cell highlight">F</div>
+                    <div class="example-cell mine flagged-correctly">🚩</div>
+                    <div class="example-cell highlight">A</div>
+                    <div class="example-cell highlight">B</div>
+                    <div class="example-cell mine flagged-correctly">🚩</div>
+                    <div class="example-cell revealed number-2">2</div>
+                    <div class="example-cell highlight">C</div>
+                    <div class="example-cell highlight">D</div>
+                    <div class="example-cell highlight">E</div>
+                    <div class="example-cell highlight">F</div>
                 </div>
             </div>
             <p>分析：</p>
@@ -161,17 +173,24 @@
                 <li>Chording 條件滿足！ (旗幟數 2 == 數字 2)</li>
             </ul>
             <p class="action-description">操作：用滑鼠左鍵點擊數字「2」。</p>
-            <p>結果：所有與數字「2」相鄰且未插旗的格子 (A, B, C, D, E, F) 都會被同時嘗試揭開。如果它們都不是地雷，它們將被揭開。如果其中有空白格（數字為0），還會觸發進一步的連鎖反應，自動揭開更多相鄰的安全格。</p>
+            <p>結果：所有與數字「2」相鄰且未插旗的格子 (A, B, C, D, E, F)
+                都會被同時嘗試揭開。如果它們都不是地雷，它們將被揭開。如果其中有空白格（數字為0），還會觸發進一步的連鎖反應，自動揭開更多相鄰的安全格。</p>
             <div class="text-center my-3">
-                 <p><small>假設揭開後 A 是「2」，B, C, D, E, F 均為安全格並部分觸發連鎖反應：</small></p>
+                <p><small>假設揭開後 A 是「2」，B, C, D, E, F 均為安全格並部分觸發連鎖反應：</small></p>
                 <div class="example-grid">
-                    <div class="example-cell mine flagged-correctly">🚩</div> <div class="example-cell safe revealed number-2">2</div> <div class="example-cell safe revealed"> </div>
-                    <div class="example-cell mine flagged-correctly">🚩</div> <div class="example-cell revealed number-2">2</div>  <div class="example-cell safe revealed"> </div> 
-                    <div class="example-cell safe revealed number-1">1</div><div class="example-cell safe revealed number-1">1</div><div class="example-cell safe revealed"> </div> 
+                    <div class="example-cell mine flagged-correctly">🚩</div>
+                    <div class="example-cell safe revealed number-2">2</div>
+                    <div class="example-cell safe revealed"> </div>
+                    <div class="example-cell mine flagged-correctly">🚩</div>
+                    <div class="example-cell revealed number-2">2</div>
+                    <div class="example-cell safe revealed"> </div>
+                    <div class="example-cell safe revealed number-1">1</div>
+                    <div class="example-cell safe revealed number-1">1</div>
+                    <div class="example-cell safe revealed"> </div>
                 </div>
                 <p><small>注意：上圖展示了一個可能的結果，實際連鎖反應會根據周圍地雷情況而定。</small></p>
             </div>
- 
+
 
             <h4 class="mt-4">Chording 的風險：錯誤的旗幟！</h4>
             <p>Chording 技巧非常強大，但它完全依賴於您插旗的準確性。如果您錯誤地標記了旗幟（即將一個安全格當作地雷插了旗），然後對一個數字執行 Chording，那麼：</p>
