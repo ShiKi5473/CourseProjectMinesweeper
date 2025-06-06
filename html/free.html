@@ -8,40 +8,40 @@
     <link rel="stylesheet" href="../css/style.css"> <!-- 您可以選擇性地為教學頁面添加通用樣式 -->
 </head>
 <body>
-    <div class="container mt-3 mb-3 text-center">
-        <div class="d-flex align-items-center mb-3 position-relative"> 
+    <div class="container mt-1 mb-1 text-center">
+        <div class="d-flex align-items-center mb-2 mt-3 position-relative"> 
             <a href="../index.html" class="btn btn-sm btn-outline-secondary">返回首頁</a>
             <h2 id="game-mode-title" class="mb-0 text-center position-absolute top-50 start-50 translate-middle">自由模式</h2>
         </div>
 
-        <div id="alert-placeholder" class="mb-3"></div>
+        <div id="alert-placeholder" class="mb-2"></div>
 
-        <div id="game-settings-area" class="mb-3 p-3 bg-light rounded shadow-sm">
-            <div class="row g-3 justify-content-center align-items-center">
+        <div id="game-settings-area" class="mb-2 p-2 bg-light rounded shadow-sm">
+            <div class="row g-2 justify-content-center align-items-center">
                 <div class="col-md-4 col-sm-12">
-                    <label for="player-name" class="form-label">玩家名稱:</label>
+                    <label for="player-name" class="form-label mb-1">玩家名稱:</label>
                     <input type="text" id="player-name" class="form-control form-control-sm" value="玩家" maxlength="20">
                 </div>
             </div>
-            <div id="free-mode-inputs" class="row g-3 justify-content-center align-items-center mt-2">
+            <div id="free-mode-inputs" class="row g-2 justify-content-center align-items-center mt-1">
                 <div class="col-md-3 col-sm-4">
-                    <label for="rows-input" class="form-label">行數 (5-24):</label>
+                    <label for="rows-input" class="form-label mb-1">行數 (5-24):</label>
                     <input type="number" id="rows-input" class="form-control form-control-sm" value="10" min="5" max="24">
                 </div>
                 <div class="col-md-3 col-sm-4">
-                    <label for="cols-input" class="form-label">列數 (5-30):</label>
+                    <label for="cols-input" class="form-label mb-1">列數 (5-30):</label>
                     <input type="number" id="cols-input" class="form-control form-control-sm" value="10" min="5" max="30">
                 </div>
                 <div class="col-md-3 col-sm-4">
-                    <label for="mines-input" class="form-label">地雷數:</label>
+                    <label for="mines-input" class="form-label mb-1">地雷數:</label>
                     <input type="number" id="mines-input" class="form-control form-control-sm" value="15" min="1">
                 </div>
             </div>
         </div>
 
-        <div id="game-controls" class="controls d-flex justify-content-around align-items-center gap-3 mb-3 p-3 bg-light rounded shadow-sm">
+        <div id="game-controls" class="controls d-flex justify-content-around align-items-center gap-3 mb-2 p-2 bg-light rounded shadow-sm">
             <div>剩餘地雷: <span id="mines-count" class="badge bg-secondary fs-6">0</span></div>
-            <button id="reset-button" class="btn btn-success">開始自訂遊戲</button>
+            <button id="reset-button" class="btn btn-success btn-sm">開始自訂遊戲</button>
             <div>時間: <span id="timer" class="badge bg-info fs-6">0s</span></div>
         </div>
 

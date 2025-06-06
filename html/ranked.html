@@ -8,24 +8,24 @@
     <link rel="stylesheet" href="../css/style.css"> <!-- 您可以選擇性地為教學頁面添加通用樣式 -->
 </head>
 <body>
-    <div class="container mt-3 mb-3 text-center">
-        <div class="d-flex align-items-center mb-3 position-relative">
+    <div class="container mt-1 mb-1 text-center">
+        <div class="d-flex align-items-center mb-2 mt-3 position-relative">
             <a href="../index.html" class="btn btn-sm btn-outline-secondary">返回首頁</a>
             <h2 id="game-mode-title" class="mb-0 text-center position-absolute top-50 start-50 translate-middle">排名模式</h2>
         </div>
 
-        <div id="alert-placeholder" class="mb-3"></div>
+        <div id="alert-placeholder" class="mb-2"></div>
 
-        <div id="game-settings-area" class="mb-3 p-3 bg-light rounded shadow-sm">
-            <div class="row g-3 justify-content-center align-items-center">
+        <div id="game-settings-area" class="mb-2 p-2 bg-light rounded shadow-sm">
+            <div class="row g-2 justify-content-center align-items-center">
                 <div class="col-md-4 col-sm-12">
-                    <label for="player-name" class="form-label">玩家名稱:</label>
+                    <label for="player-name" class="form-label mb-1">玩家名稱:</label>
                     <input type="text" id="player-name" class="form-control form-control-sm" value="玩家" maxlength="20">
                 </div>
             </div>
-            <div id="ranked-difficulty-selection" class="row g-3 justify-content-center align-items-center mt-2">
+            <div id="ranked-difficulty-selection" class="row g-2 justify-content-center align-items-center mt-1">
                  <div class="col-md-8 col-sm-12">
-                    <label class="form-label">選擇難度:</label>
+                    <label class="form-label mb-1">選擇難度:</label>
                     <div class="btn-group w-100" role="group" aria-label="Ranked difficulty selection">
                         <input type="radio" class="btn-check" name="ranked-difficulty" id="diff-easy" value="easy" autocomplete="off" checked>
                         <label class="btn btn-sm btn-outline-primary" for="diff-easy">簡單 (9x9, 10雷)</label>
@@ -38,12 +38,12 @@
             </div>
         </div>
 
-        <div id="game-controls" class="controls d-flex justify-content-around align-items-center gap-3 mb-3 p-3 bg-light rounded shadow-sm">
+        <div id="game-controls" class="controls d-flex justify-content-around align-items-center gap-3 mb-2 p-2 bg-light rounded shadow-sm">
             <div>剩餘地雷: <span id="mines-count" class="badge bg-secondary fs-6">0</span></div>
             <!-- 新增一個 div 來包裹開始按鈕和排行榜按鈕，使其垂直排列 -->
-            <div class="d-flex flex-column align-items-center gap-2">
-                <button id="reset-button" class="btn btn-success w-100">重置遊戲</button>
-                <a href="RankingList.html" class="btn btn-info btn-sm w-100">查看排行榜</a> 
+            <div class="d-flex flex-column align-items-center gap-1">
+                <button id="reset-button" class="btn btn-success btn-sm w-100">重置遊戲</button>
+                <a href="RankingList.html" class="btn btn-info btn-sm w-100">查看排行榜</a>
             </div>
             <div>時間: <span id="timer" class="badge bg-info fs-6">0s</span></div>
         </div>
