@@ -4,9 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const leaderboardBody = document.getElementById('leaderboard-body');
     const difficultyButtons = document.querySelectorAll('.difficulty-selector .btn');
     const alertPlaceholderRanking = document.getElementById('alert-placeholder-ranking');
-    const backendBaseUrl = 'http://localhost:3000'; // 您的後端伺服器位址
-
-    /**
+    const backendBaseUrl = 'https://minesweeperproject0606-hcemaga7hqf9h9cf.eastasia-01.azurewebsites.net'; // 您的後端伺服器位址
+    /**tcpping minesweeperproject0606-hcemaga7hqf9h9cf.eastasia-01.azurewebsites.net:1433
+     * nc -zv minesweeperproject0606-hcemaga7hqf9h9cf.eastasia-01.azurewebsites.net 1433
+     * curl -v telnet://minesweeperproject0606-hcemaga7hqf9h9cf.eastasia-01.azurewebsites.net:1433
      * 顯示提示訊息
      * @param {string} message - 要顯示的訊息
      * @param {string} [type='info'] - 提示類型 (success, danger, warning, info)
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         // Fallback if getInstance is null (e.g., element removed before timeout)
                         alertElement.classList.remove('show');
-                        setTimeout(() => { 
+                        setTimeout(() => {
                             if (alertElement.parentNode) {
                                 alertElement.parentNode.removeChild(alertElement);
                             }
@@ -120,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const minutes = date.getMinutes().toString().padStart(2, '0');
                 const seconds = date.getSeconds().toString().padStart(2, '0');
                 dateCell.textContent = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
-            } catch(e) {
+            } catch (e) {
                 console.warn("解析日期時發生錯誤:", score.timestamp, e);
                 dateCell.textContent = '無效日期';
             }

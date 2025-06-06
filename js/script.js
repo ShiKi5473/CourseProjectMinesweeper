@@ -22,14 +22,14 @@ let playerName = "玩家";
 
 //計時器相關變數 ---
 let timerInterval = null;
-let startTime = 0; 
-let elapsedTime = 0; 
+let startTime = 0;
+let elapsedTime = 0;
 
 
 // DOM 元素選擇 (通用元素)
 const alertPlaceholder = document.getElementById('alert-placeholder');
 const playerNameInput = document.getElementById('player-name');
-const resetButton = document.getElementById('reset-button'); 
+const resetButton = document.getElementById('reset-button');
 
 // 遊戲板相關 (如果頁面上有遊戲板)
 const gameBoardElement = document.getElementById('game-board');
@@ -45,14 +45,14 @@ let rankedDifficultyRadios, rowsInput, colsInput, minesInput;
  */
 function initializePage() {
     const path = window.location.pathname.split("/").pop().toLowerCase();
-    console.log('[DEBUG] Initializing page, path:', path); 
+    console.log('[DEBUG] Initializing page, path:', path);
 
     if (path.includes("ranked.html")) {
         CURRENT_GAME_MODE = 'ranked';
-        currentDifficultyName = DEFAULT_SETTINGS.easy.name; 
+        currentDifficultyName = DEFAULT_SETTINGS.easy.name;
         rankedDifficultyRadios = document.querySelectorAll('input[name="ranked-difficulty"]');
         const easyRadio = document.getElementById('diff-easy');
-        if (easyRadio) easyRadio.checked = true; 
+        if (easyRadio) easyRadio.checked = true;
         if (rankedDifficultyRadios) {
             rankedDifficultyRadios.forEach(radio => {
                 radio.addEventListener('change', () => {
@@ -69,7 +69,7 @@ function initializePage() {
         }
     } else if (path.includes("free.html")) {
         CURRENT_GAME_MODE = 'free';
-        console.log('[DEBUG] Game mode set to: free'); 
+        console.log('[DEBUG] Game mode set to: free');
         currentDifficultyName = DEFAULT_SETTINGS.custom.name;
         rowsInput = document.getElementById('rows-input');
         colsInput = document.getElementById('cols-input');
@@ -77,24 +77,24 @@ function initializePage() {
         if (rowsInput) rowsInput.value = DEFAULT_SETTINGS.custom.rows;
         if (colsInput) colsInput.value = DEFAULT_SETTINGS.custom.cols;
         if (minesInput) minesInput.value = DEFAULT_SETTINGS.custom.mines;
-        console.log('[DEBUG] Free mode inputs obtained and set to default:', rowsInput, colsInput, minesInput); 
-    } else if (path.includes("tutorial.html") || path.includes("tutorial_level")) { 
+        console.log('[DEBUG] Free mode inputs obtained and set to default:', rowsInput, colsInput, minesInput);
+    } else if (path.includes("tutorial.html") || path.includes("tutorial_level")) {
         CURRENT_GAME_MODE = 'tutorial';
         console.log('[DEBUG] Game mode set to: tutorial');
-        return; 
-    } else if (path === "" || path === "index.html") { 
+        return;
+    } else if (path === "" || path === "index.html") {
         CURRENT_GAME_MODE = 'home';
         console.log('[DEBUG] Game mode set to: home');
         return;
     }
-     else {
+    else {
         console.warn('[DEBUG] Unknown page, not initializing game logic for path:', path);
         return;
     }
 
     if (playerNameInput) playerNameInput.value = playerName;
 
-    if (resetButton) { 
+    if (resetButton) {
         resetButton.addEventListener('click', setupGame);
     }
     setupGame(true); // 傳入 true 表示是初始載入
@@ -114,10 +114,10 @@ function updateGameSettings() {
         if (playerNameInput) playerNameInput.value = playerName;
     }
 
-    let settingsAreGoodAndNoAlertsShown = true; 
+    let settingsAreGoodAndNoAlertsShown = true;
 
     if (CURRENT_GAME_MODE === 'ranked') {
-        let selectedDifficulty = 'easy'; 
+        let selectedDifficulty = 'easy';
         if (rankedDifficultyRadios) {
             rankedDifficultyRadios.forEach(radio => {
                 if (radio.checked) {
@@ -132,63 +132,63 @@ function updateGameSettings() {
         currentDifficultyName = level.name;
     } else if (CURRENT_GAME_MODE === 'free') {
         currentDifficultyName = "自訂";
-        if (!rowsInput || !colsInput || !minesInput) { 
+        if (!rowsInput || !colsInput || !minesInput) {
             console.error("[DEBUG] 自由模式輸入框未找到！將使用預設自訂設定。");
             showAlert("無法讀取自訂設定輸入框，已使用預設『自訂』設定。", "danger", 7000);
             CURRENT_ROWS = DEFAULT_SETTINGS.custom.rows;
             CURRENT_COLS = DEFAULT_SETTINGS.custom.cols;
             CURRENT_MINES = DEFAULT_SETTINGS.custom.mines;
-            return false; 
+            return false;
         }
         let parsedRows = parseInt(rowsInput.value);
         let parsedCols = parseInt(colsInput.value);
         let parsedMines = parseInt(minesInput.value);
-        
+
         console.log('[DEBUG] Free mode raw values - Rows:', rowsInput.value, 'Cols:', colsInput.value, 'Mines:', minesInput.value);
         console.log('[DEBUG] Free mode parsed values - Rows:', parsedRows, 'Cols:', parsedCols, 'Mines:', parsedMines);
-        
-        let localSettingsValid = true; 
+
+        let localSettingsValid = true;
         let validationMessage = "";
 
         if (isNaN(parsedRows) || parsedRows < 5 || parsedRows > 24) {
-            parsedRows = DEFAULT_SETTINGS.custom.rows; 
+            parsedRows = DEFAULT_SETTINGS.custom.rows;
             if (rowsInput) rowsInput.value = parsedRows;
             validationMessage += `行數無效 (範圍 5-24)，已重設為 ${parsedRows}。<br>`;
             localSettingsValid = false;
         }
         if (isNaN(parsedCols) || parsedCols < 5 || parsedCols > 30) {
-            parsedCols = DEFAULT_SETTINGS.custom.cols; 
+            parsedCols = DEFAULT_SETTINGS.custom.cols;
             if (colsInput) colsInput.value = parsedCols;
             validationMessage += `列數無效 (範圍 5-30)，已重設為 ${parsedCols}。<br>`;
             localSettingsValid = false;
         }
-        
+
         CURRENT_ROWS = parsedRows;
         CURRENT_COLS = parsedCols;
         const currentTotalCells = CURRENT_ROWS * CURRENT_COLS;
-        
-        let minSafeCells = 1; 
-        if (currentTotalCells > 9) { 
+
+        let minSafeCells = 1;
+        if (currentTotalCells > 9) {
             minSafeCells = 9;
-        } else if (currentTotalCells > 0) { 
+        } else if (currentTotalCells > 0) {
             minSafeCells = 1;
-        } else { 
-             minSafeCells = 0;
+        } else {
+            minSafeCells = 0;
         }
-        
+
         const maxMines = currentTotalCells > 0 ? currentTotalCells - minSafeCells : 0;
         console.log(`[DEBUG] Calculated for free mode: totalCells=${currentTotalCells}, minSafeCells=${minSafeCells}, maxMines=${maxMines}`);
 
-        if (isNaN(parsedMines) || parsedMines < (currentTotalCells > 0 ? 1 : 0) || (currentTotalCells > 0 && parsedMines > maxMines) ) {
-            let originalMinesInput = minesInput.value; 
+        if (isNaN(parsedMines) || parsedMines < (currentTotalCells > 0 ? 1 : 0) || (currentTotalCells > 0 && parsedMines > maxMines)) {
+            let originalMinesInput = minesInput.value;
             if (currentTotalCells === 0) {
                 parsedMines = 0;
             } else {
-                 parsedMines = Math.min(DEFAULT_SETTINGS.custom.mines, maxMines > 0 ? maxMines : 1);
-                 if (parsedMines < 1 && currentTotalCells > 0 && maxMines >=1 ) parsedMines = 1; 
-                 else if (maxMines < 1 && currentTotalCells > 0) parsedMines = (currentTotalCells > 0 ? 1 : 0); 
+                parsedMines = Math.min(DEFAULT_SETTINGS.custom.mines, maxMines > 0 ? maxMines : 1);
+                if (parsedMines < 1 && currentTotalCells > 0 && maxMines >= 1) parsedMines = 1;
+                else if (maxMines < 1 && currentTotalCells > 0) parsedMines = (currentTotalCells > 0 ? 1 : 0);
             }
-            
+
             if (minesInput) minesInput.value = parsedMines;
             const displayMinMines = currentTotalCells > 0 ? 1 : 0;
             const displayMaxMines = maxMines > 0 ? maxMines : displayMinMines;
@@ -199,16 +199,16 @@ function updateGameSettings() {
 
         if (!localSettingsValid && validationMessage) {
             showAlert(validationMessage, "warning", 7000);
-            settingsAreGoodAndNoAlertsShown = false; 
+            settingsAreGoodAndNoAlertsShown = false;
         }
-    } else { 
+    } else {
         CURRENT_ROWS = DEFAULT_SETTINGS.easy.rows;
         CURRENT_COLS = DEFAULT_SETTINGS.easy.cols;
         CURRENT_MINES = DEFAULT_SETTINGS.easy.mines;
         currentDifficultyName = DEFAULT_SETTINGS.easy.name;
     }
     console.log('[DEBUG] Final settings - Rows:', CURRENT_ROWS, 'Cols:', CURRENT_COLS, 'Mines:', CURRENT_MINES);
-    return settingsAreGoodAndNoAlertsShown; 
+    return settingsAreGoodAndNoAlertsShown;
 }
 
 /**
@@ -219,17 +219,17 @@ function setupGame(isInitialLoad = false) {
     if (CURRENT_GAME_MODE === 'tutorial') {
         return;
     }
-    if (!gameBoardElement) { 
+    if (!gameBoardElement) {
         console.warn('[DEBUG] Game board element not found, skipping setupGame.');
-        return; 
+        return;
     }
 
     stopTimer();
-    elapsedTime = 0; 
-    updateTimerDisplay(); 
+    elapsedTime = 0;
+    updateTimerDisplay();
 
     if (alertPlaceholder && !isInitialLoad) { // 只在非初始載入時主動清除 alert (因為 updateGameSettings 可能已經顯示了)
-         alertPlaceholder.innerHTML = '';
+        alertPlaceholder.innerHTML = '';
     } else if (isInitialLoad && alertPlaceholder) {
         alertPlaceholder.innerHTML = ''; // 初始載入也清除一下，確保乾淨
     }
@@ -245,7 +245,7 @@ function setupGame(isInitialLoad = false) {
 
     if (minesCountElement) minesCountElement.textContent = CURRENT_MINES;
     gameBoardElement.innerHTML = '';
-    
+
     const colsForGrid = (typeof CURRENT_COLS === 'number' && CURRENT_COLS > 0) ? CURRENT_COLS : DEFAULT_SETTINGS.custom.cols;
     gameBoardElement.style.gridTemplateColumns = `repeat(${colsForGrid}, 32px)`;
 
@@ -278,21 +278,21 @@ function setupGame(isInitialLoad = false) {
 // --- 計時器函數 ---
 function startTimer() {
     if (timerInterval) clearInterval(timerInterval);
-    startTime = performance.now(); 
+    startTime = performance.now();
     elapsedTime = 0;
-    updateTimerDisplay(); 
+    updateTimerDisplay();
     timerInterval = setInterval(() => {
-        if (!gameOver) { 
-            elapsedTime = performance.now() - startTime; 
+        if (!gameOver) {
+            elapsedTime = performance.now() - startTime;
         }
         updateTimerDisplay();
-    }, 47); 
+    }, 47);
 }
 
 function stopTimer() {
     clearInterval(timerInterval);
     timerInterval = null;
-    if (startTime > 0) { 
+    if (startTime > 0) {
         elapsedTime = performance.now() - startTime;
     }
     updateTimerDisplay();
@@ -314,20 +314,20 @@ function placeMines(firstClickR, firstClickC) {
         showAlert(`地雷數量 (${CURRENT_MINES}) 等於或超過總格子數 (${totalCells})，遊戲無法開始。請重新設定。`, "danger", 7000);
         gameOver = true; stopTimer(); return;
     }
-    if (totalCells === 1 && CURRENT_MINES > 0) { 
+    if (totalCells === 1 && CURRENT_MINES > 0) {
         showAlert(`無法在 1x1 的遊戲板上為第一次點擊保留安全格來放置 ${CURRENT_MINES} 個地雷。`, "danger", 7000);
         gameOver = true; stopTimer(); return;
     }
-    if (CURRENT_MINES === 0) { 
+    if (CURRENT_MINES === 0) {
         if (totalCells > 0) calculateAdjacentMines();
         return;
     }
-    
+
     const possibleMineLocations = [];
     for (let r = 0; r < CURRENT_ROWS; r++) {
         for (let c = 0; c < CURRENT_COLS; c++) {
             if (r !== firstClickR || c !== firstClickC) {
-                possibleMineLocations.push({r, c});
+                possibleMineLocations.push({ r, c });
             }
         }
     }
@@ -336,15 +336,15 @@ function placeMines(firstClickR, firstClickC) {
         showAlert(`可佈雷的位置 (${possibleMineLocations.length}) 少於設定的地雷數 (${CURRENT_MINES})。這通常發生在極小的遊戲板。請調整設定。`, "danger", 7000);
         gameOver = true; stopTimer(); return;
     }
-    
+
     for (let i = possibleMineLocations.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [possibleMineLocations[i], possibleMineLocations[j]] = [possibleMineLocations[j], possibleMineLocations[i]];
     }
 
-    for (let i = 0; i < CURRENT_MINES; i++) { 
+    for (let i = 0; i < CURRENT_MINES; i++) {
         const loc = possibleMineLocations[i];
-        if (board[loc.r] && board[loc.r][loc.c]) { 
+        if (board[loc.r] && board[loc.r][loc.c]) {
             board[loc.r][loc.c].isMine = true;
             minesPlacedCount++;
         } else {
@@ -366,14 +366,14 @@ function placeMines(firstClickR, firstClickC) {
 function calculateAdjacentMines() {
     for (let r = 0; r < CURRENT_ROWS; r++) {
         for (let c = 0; c < CURRENT_COLS; c++) {
-            if (!board[r] || !board[r][c] || board[r][c].isMine) continue; 
+            if (!board[r] || !board[r][c] || board[r][c].isMine) continue;
             let count = 0;
             for (let dr = -1; dr <= 1; dr++) {
                 for (let dc = -1; dc <= 1; dc++) {
                     if (dr === 0 && dc === 0) continue;
                     const nr = r + dr; const nc = c + dc;
                     if (nr >= 0 && nr < CURRENT_ROWS && nc >= 0 && nc < CURRENT_COLS) {
-                         if (board[nr] && board[nr][nc] && board[nr][nc].isMine) { 
+                        if (board[nr] && board[nr][nc] && board[nr][nc].isMine) {
                             count++;
                         }
                     }
@@ -401,7 +401,7 @@ function calculateFloodFillCells(startR, startC, cellsToRevealSet) {
         const { r, c } = queue.shift();
         const cellKey = `${r},${c}`;
         cellsToRevealSet.add(cellKey);
-        if (!board[r] || !board[r][c]) continue; 
+        if (!board[r] || !board[r][c]) continue;
         const currentCellData = board[r][c];
         if (currentCellData.adjacentMines > 0) continue;
         for (let dr = -1; dr <= 1; dr++) {
@@ -410,7 +410,7 @@ function calculateFloodFillCells(startR, startC, cellsToRevealSet) {
                 const nr = r + dr; const nc = c + dc;
                 const neighborKey = `${nr},${nc}`;
                 if (nr >= 0 && nr < CURRENT_ROWS && nc >= 0 && nc < CURRENT_COLS && !visitedInThisCalc.has(neighborKey)) {
-                    if (!board[nr] || !board[nr][nc]) continue; 
+                    if (!board[nr] || !board[nr][nc]) continue;
                     const neighborCellData = board[nr][nc];
                     if (!neighborCellData.isRevealed && !neighborCellData.isFlagged && !neighborCellData.isMine) {
                         visitedInThisCalc.add(neighborKey);
@@ -431,7 +431,7 @@ function handleCellClick(event) {
     if (gameOver || CURRENT_GAME_MODE === 'tutorial' || !gameBoardElement) return;
 
     const cellElement = event.target;
-    if (!cellElement.classList.contains('cell')) return; 
+    if (!cellElement.classList.contains('cell')) return;
 
     const r = parseInt(cellElement.dataset.row);
     const c = parseInt(cellElement.dataset.col);
@@ -444,8 +444,8 @@ function handleCellClick(event) {
     if (firstClick && !cellData.isRevealed && !cellData.isFlagged) {
         startTimer();
         placeMines(r, c);
-        if (gameOver) { 
-            return; 
+        if (gameOver) {
+            return;
         }
         firstClick = false;
     }
@@ -516,7 +516,7 @@ function handleCellClick(event) {
     }
     for (const cellKey of cellsToEffectivelyReveal) {
         const [row, col] = cellKey.split(',').map(Number);
-         if (!board[row] || !board[row][col]) continue;
+        if (!board[row] || !board[row][col]) continue;
         const currentAffectedCellData = board[row][col];
         const currentAffectedCellElement = document.querySelector(`.cell[data-row='${row}'][data-col='${col}']`);
         if (currentAffectedCellElement && !currentAffectedCellData.isRevealed && !currentAffectedCellData.isFlagged && !currentAffectedCellData.isMine) {
@@ -536,7 +536,7 @@ function handleCellRightClick(event) {
 
     const r = parseInt(cellElement.dataset.row);
     const c = parseInt(cellElement.dataset.col);
-    if (isNaN(r) || isNaN(c) ||r < 0 || r >= CURRENT_ROWS || c < 0 || c >= CURRENT_COLS || !board[r] || !board[r][c]) return;
+    if (isNaN(r) || isNaN(c) || r < 0 || r >= CURRENT_ROWS || c < 0 || c >= CURRENT_COLS || !board[r] || !board[r][c]) return;
     const cellData = board[r][c];
     if (cellData.isRevealed) return;
 
@@ -566,7 +566,7 @@ function revealAllMines(isWin) {
                     else { cellElement.classList.add('revealed', 'mine'); cellElement.textContent = '💣'; }
                 } else if (cellData.isFlagged && !cellData.isMine) {
                     cellElement.classList.add('revealed', 'wrong-flag'); cellElement.classList.remove('flagged'); cellElement.textContent = '❌';
-                } else if (!cellData.isRevealed) { 
+                } else if (!cellData.isRevealed) {
                     cellElement.classList.add('revealed');
                     if (cellData.adjacentMines > 0) { cellElement.textContent = cellData.adjacentMines; cellElement.dataset.count = cellData.adjacentMines; }
                 }
@@ -575,17 +575,17 @@ function revealAllMines(isWin) {
     }
 }
 function checkWinCondition() {
-    if (!gameBoardElement) return; 
+    if (!gameBoardElement) return;
     let won = false;
     const totalCells = CURRENT_ROWS * CURRENT_COLS;
-    
+
     // 確保 totalCells 大於 0 才進行後續判斷，避免 0/0 的情況
-    if (totalCells === 0) { 
+    if (totalCells === 0) {
         // 如果是 0x0 的板子，可以視為立即勝利或不處理 (取決於遊戲設計)
         // 目前，如果 totalCells 為 0，下面的條件都不會滿足 won
         // 可以考慮如果 totalCells === 0 && CURRENT_MINES === 0，則 won = true;
         if (CURRENT_MINES === 0) {
-             // won = true; // 0x0 板子，0個雷，可以視為勝利
+            // won = true; // 0x0 板子，0個雷，可以視為勝利
         }
     } else if (CURRENT_MINES === 0 && revealedCellsCount === totalCells) { // 無雷模式
         won = true;
@@ -624,10 +624,9 @@ async function submitScoreToBackend(name, time, difficulty) {
     const timeInSecondsForDisplay = (time / 1000).toFixed(3);
     showAlert(`正在嘗試提交分數: ${name} - ${timeInSecondsForDisplay}s (${difficulty})...`, "info");
 
-    const backendUrl = 'http://localhost:3000/api/submit-score';
-
+    const backendUrl = 'https://minesweeperproject0606-hcemaga7hqf9h9cf.eastasia-01.azurewebsites.net';
     try {
-        const response = await fetch(backendUrl, {
+        const response = await fetch(`${backendUrl}/api/submit-score`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -660,16 +659,16 @@ function showAlert(message, type = 'info', duration = 0) {
     }
     console.log('[DEBUG] showAlert: alertPlaceholder found:', alertPlaceholder);
 
-    alertPlaceholder.innerHTML = ''; 
+    alertPlaceholder.innerHTML = '';
     const wrapper = document.createElement('div');
-    const alertId = `alert-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`; 
+    const alertId = `alert-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     wrapper.innerHTML = [
         `<div class="alert alert-${type} alert-dismissible fade show" role="alert" id="${alertId}">`,
         `   <div>${message}</div>`,
         '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
         '</div>'
     ].join('');
-    alertPlaceholder.appendChild(wrapper); 
+    alertPlaceholder.appendChild(wrapper);
     console.log(`[DEBUG] showAlert: Bootstrap alert HTML appended to alertPlaceholder. Alert ID: ${alertId}`);
 
     const alertElementForBootstrap = document.getElementById(alertId);
@@ -706,10 +705,10 @@ function showAlert(message, type = 'info', duration = 0) {
                                 alertToDismiss.parentNode.removeChild(alertToDismiss);
                                 console.log(`[DEBUG] showAlert: Alert ${alertId} removed from DOM (fallback).`);
                             }
-                        }, 150); 
+                        }, 150);
                     }
                 } else {
-                    alertToDismiss.style.display = 'none'; 
+                    alertToDismiss.style.display = 'none';
                     if (alertToDismiss.parentNode) {
                         alertToDismiss.parentNode.removeChild(alertToDismiss);
                         console.log(`[DEBUG] showAlert: Alert ${alertId} hidden/removed (Bootstrap JS not available).`);
