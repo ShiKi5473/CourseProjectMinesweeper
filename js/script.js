@@ -47,7 +47,7 @@ function initializePage() {
     const path = window.location.pathname.split("/").pop().toLowerCase();
     console.log('[DEBUG] Initializing page, path:', path);
 
-    if (path.includes("ranked.html")) {
+    if (path.includes("ranked")) {
         CURRENT_GAME_MODE = 'ranked';
         currentDifficultyName = DEFAULT_SETTINGS.easy.name;
         rankedDifficultyRadios = document.querySelectorAll('input[name="ranked-difficulty"]');
@@ -67,7 +67,7 @@ function initializePage() {
                 });
             });
         }
-    } else if (path.includes("free.html")) {
+    } else if (path.includes("free")) {
         CURRENT_GAME_MODE = 'free';
         console.log('[DEBUG] Game mode set to: free');
         currentDifficultyName = DEFAULT_SETTINGS.custom.name;
@@ -78,7 +78,7 @@ function initializePage() {
         if (colsInput) colsInput.value = DEFAULT_SETTINGS.custom.cols;
         if (minesInput) minesInput.value = DEFAULT_SETTINGS.custom.mines;
         console.log('[DEBUG] Free mode inputs obtained and set to default:', rowsInput, colsInput, minesInput);
-    } else if (path.includes("tutorial.html") || path.includes("tutorial_level")) {
+    } else if (path.includes("tutorial") || path.includes("tutorial_level")) {
         CURRENT_GAME_MODE = 'tutorial';
         console.log('[DEBUG] Game mode set to: tutorial');
         return;
