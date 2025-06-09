@@ -286,7 +286,7 @@ function startTimer() {
             elapsedTime = performance.now() - startTime;
         }
         updateTimerDisplay();
-    }, 47);
+    }, 50);
 }
 
 function stopTimer() {
